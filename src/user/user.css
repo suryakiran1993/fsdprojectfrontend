@@ -1,0 +1,30 @@
+.task-card {
+    perspective: 1000px; /* Required for 3D effect */
+  }
+  
+  .task-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+  }
+  
+  .task-card:hover .task-card-inner {
+    transform: rotateY(180deg); /* Rotates the card on hover */
+  }
+  
+  .task-card-front,
+  .task-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    padding: 16px;
+    box-sizing: border-box;
+  }
+  
+  .task-card-back {
+    transform: rotateY(180deg); /* Initially hide the back */
+  }
+  

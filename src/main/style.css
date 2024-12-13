@@ -1,0 +1,78 @@
+/* Left Side Navigation Bar */
+nav {
+  background-color: #333;
+  width: 200px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding-top: 20px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  margin-bottom: 10px;
+}
+
+nav a {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+nav a:hover {
+  background-color: #555;
+}
+
+.dropdown-content {
+  position: static;
+  display: none;
+  flex-direction: column;
+  background-color: #444;
+  margin-top: 5px;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-content {
+  display: flex;
+}
+
+.dropdown-content a {
+  padding-left: 40px; /* Indent for dropdown links */
+}
+
+.content {
+  margin-left: 220px; /* Space for the nav bar */
+  padding: 20px;
+}
+
+.logoutButton {
+  background-color: #ff4d4d; /* Red background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding for size */
+  font-size: 16px; /* Font size */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.logoutButton:hover {
+  background-color: #e60000; /* Darker red on hover */
+}
+
+.logoutButton:active {
+  background-color: #cc0000; /* Even darker red on click */
+  transform: scale(0.98); /* Slight shrink effect on click */
+}
