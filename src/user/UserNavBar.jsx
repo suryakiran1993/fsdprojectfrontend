@@ -29,13 +29,27 @@ export default function UserNavBar()
   <ul>
     
     <li><Link to="/userhome">Dashboard</Link></li> 
+    <li><Link to="/userhome">Dashboard</Link></li> 
 
     <li><Link to="/updateuserprofile">Edit Profile</Link></li>  {/* Changed "Update Profile" to "Edit Profile" */}
-    <li><Link to="/addselftask">Add Task</Link></li>
-    <li><Link to="/viewselftasks">View Self Tasks</Link></li>
-    <li><Link to="/addtask">Assign Task to Others</Link></li>
-    <li><Link to="/viewassignedbytasks">My Assigned Tasks</Link></li>  {/* Updated name for clarity */}
-    <li><Link to="/viewassignedtotasks">Tasks Assigned To Me</Link></li>  {/* Updated name for clarity */}
+    
+    <li className="dropdown">
+            <Link to="#" className="nav-link">Self Tasks</Link>
+            <div className="dropdown-content">
+            <Link to="/addselftask">Add Self Task</Link>
+            <Link to="/viewselftasks">View Self Tasks</Link>
+            </div>
+    </li>
+
+    <li className="dropdown">
+            <Link to="#" className="nav-link">Assign Tasks</Link>
+            <div className="dropdown-content">
+            <Link to="/addtask">To Others</Link>
+            <Link to="/viewassignedbytasks">Assigned Tasks</Link>
+            <Link to="/viewassignedtotasks">Tasks Assigned To Me</Link>
+            </div>
+    </li>
+  
     <li><Link onClick={handleLogout}>Log Out</Link></li>  {/* Changed "Logout" to "Log Out" */}
   </ul>
 </nav>

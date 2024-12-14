@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Config from '../Config';
-import { Container, Grid, Card, CardContent, Typography, CircularProgress } from '@mui/material';
+import { Container, Grid, Card, CardContent, Typography, CircularProgress, Box } from '@mui/material';
+import { green, red, yellow, blue } from '@mui/material/colors';
 
 export default function AdminHome() {
   const [adminData, setAdminData] = useState("");
@@ -45,62 +46,66 @@ export default function AdminHome() {
   };
 
   return (
-    <Container maxWidth="lg" sx={{ paddingTop: 4, marginLeft: '240px' }}> {/* Adjust the left margin here */}
+    <Container maxWidth="lg" sx={{ paddingTop: 4, marginLeft: '240px' }}>
       {adminData ? (
         <div>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom color="primary">
             Welcome {adminData.username}
           </Typography>
 
           {/* Displaying task analysis */}
           <Grid container spacing={4}>
+            {/* Total Tasks */}
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ backgroundColor: blue[50], boxShadow: 3, borderRadius: 2 }}>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
                     Total Tasks
                   </Typography>
                   <Typography variant="h5" color="primary">
-                    {loading ? <CircularProgress /> : taskCounts.totalTasks}
+                    {loading ? <CircularProgress color="primary" size={24} /> : taskCounts.totalTasks}
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
 
+            {/* Assigned Tasks */}
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ backgroundColor: yellow[100], boxShadow: 3, borderRadius: 2 }}>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
                     Assigned Tasks
                   </Typography>
                   <Typography variant="h5" color="secondary">
-                    {loading ? <CircularProgress /> : taskCounts.assigned}
+                    {loading ? <CircularProgress color="secondary" size={24} /> : taskCounts.assigned}
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
 
+            {/* In Progress Tasks */}
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ backgroundColor: yellow[200], boxShadow: 3, borderRadius: 2 }}>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
                     In Progress Tasks
                   </Typography>
                   <Typography variant="h5" color="warning">
-                    {loading ? <CircularProgress /> : taskCounts.inProgress}
+                    {loading ? <CircularProgress color="warning" size={24} /> : taskCounts.inProgress}
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
 
+            {/* Completed Tasks */}
             <Grid item xs={12} sm={6} md={3}>
-              <Card>
+              <Card sx={{ backgroundColor: green[100], boxShadow: 3, borderRadius: 2 }}>
                 <CardContent>
-                  <Typography variant="h6" gutterBottom>
+                  <Typography variant="h6" color="text.secondary" gutterBottom>
                     Completed Tasks
                   </Typography>
                   <Typography variant="h5" color="success">
-                    {loading ? <CircularProgress /> : taskCounts.completed}
+                    {loading ? <CircularProgress color="success" size={24} /> : taskCounts.completed}
                   </Typography>
                 </CardContent>
               </Card>
@@ -109,13 +114,17 @@ export default function AdminHome() {
 
           {/* Error handling */}
           {error && (
-            <Typography variant="body1" color="error" sx={{ marginTop: 2 }}>
-              Error: {error}
-            </Typography>
+            <Box sx={{ marginTop: 2 }}>
+              <Typography variant="body1" color="error">
+                Error: {error}
+              </Typography>
+            </Box>
           )}
         </div>
       ) : (
-        <CircularProgress />
+        <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: 4 }}>
+          <CircularProgress />
+        </Box>
       )}
     </Container>
   );

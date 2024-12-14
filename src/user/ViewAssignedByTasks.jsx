@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Typography, Grid, Card, CardContent, TextField, Button } from '@mui/material';
+import { Box, Typography, Grid, Card, CardContent, TextField, Button, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Config from '../Config';
@@ -11,6 +11,7 @@ const ViewAssignedByTasks = () => {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [userData, setUserData] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState('All'); // New state for status filter
   const [assignedUsers, setAssignedUsers] = useState({});
   const navigate = useNavigate();
 
@@ -61,12 +62,27 @@ const ViewAssignedByTasks = () => {
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
+    applyFilters(value, statusFilter);
+  };
 
-    const filtered = tasks.filter((task) =>
-      task.name.toLowerCase().includes(value.toLowerCase()) ||
-      task.category.toLowerCase().includes(value.toLowerCase()) ||
-      task.subcategory.toLowerCase().includes(value.toLowerCase())
-    );
+  const handleStatusChange = (event) => {
+    const value = event.target.value;
+    setStatusFilter(value);
+    applyFilters(searchTerm, value);
+  };
+
+  const applyFilters = (searchTerm, statusFilter) => {
+    const filtered = tasks.filter((task) => {
+      const matchesSearch =
+        task.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        task.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        task.subcategory.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesStatus = statusFilter === 'All' || task.status === statusFilter;
+
+      return matchesSearch && matchesStatus;
+    });
+
     setFilteredTasks(filtered);
   };
 
@@ -97,19 +113,29 @@ const ViewAssignedByTasks = () => {
         Tasks Assigned By Me
       </Typography>
 
-      {/* Only show search bar if tasks are available */}
       {tasks.length > 0 && (
-        <TextField
-          label="Search Tasks"
-          variant="outlined"
-          fullWidth
-          value={searchTerm}
-          onChange={handleSearchChange}
-          sx={{ marginBottom: 2 }}
-        />
+        <>
+          <TextField
+            label="Search Tasks"
+            variant="outlined"
+            fullWidth
+            value={searchTerm}
+            onChange={handleSearchChange}
+            sx={{ marginBottom: 2 }}
+          />
+
+          <FormControl fullWidth sx={{ marginBottom: 2 }}>
+            <InputLabel>Status</InputLabel>
+            <Select value={statusFilter} onChange={handleStatusChange}>
+              <MenuItem value="All">All</MenuItem>
+              <MenuItem value="COMPLETED">COMPLETED</MenuItem>
+              <MenuItem value="IN PROGRESS">IN PPROGRESS</MenuItem>
+              <MenuItem value="ASSIGNED">ASSIGNED</MenuItem>
+            </Select>
+          </FormControl>
+        </>
       )}
 
-      {/* Show message if no tasks are available */}
       {tasks.length === 0 ? (
         <Typography variant="body1" color="red" sx={{ textAlign: 'center' }}>
           You have no tasks assigned.
@@ -125,7 +151,6 @@ const ViewAssignedByTasks = () => {
                     Description: {task.description}
                   </Typography>
 
-                  {/* Displaying the start and end dates */}
                   <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 1 }}>
                     <AccessTimeIcon sx={{ marginRight: 1 }} />
                     <Typography variant="body2">
@@ -142,6 +167,11 @@ const ViewAssignedByTasks = () => {
                   <Typography variant="body2" color="textSecondary">
                     Assigned To: {assignedUsers[task.assignedTo] || 'Loading...'}
                   </Typography>
+
+                  <Typography variant="body2" color="textSecondary">
+                    Status: {task.status}
+                  </Typography>
+
                   <Button
                     variant="contained"
                     color="primary"

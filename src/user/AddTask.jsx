@@ -151,26 +151,27 @@ export default function AddTask() {
           Add Task
         </Typography>
 
-        {/* Task Category */}
         <TextField
-          name="category"
-          label="Task Category"
-          value={task.category}
-          onChange={handleChange}
-          fullWidth
-          required
-          select
-          sx={{ marginBottom: 2 }}
-          SelectProps={{
-            native: true,
-          }}
-          InputLabelProps={{
-            shrink: true,
-          }}
-        >
-          <option value="Academics">Academics</option>
-          <option value="Research">Research</option>
-        </TextField>
+  name="category"
+  label="Task Category"
+  value={task.category}
+  onChange={handleChange}
+  fullWidth
+  required
+  select
+  sx={{ marginBottom: 2 }}
+  SelectProps={{
+    native: true,
+  }}
+  InputLabelProps={{
+    shrink: true,
+  }}
+>
+  <option value="">---Select---</option> {/* Add this line for the "Select" option */}
+  <option value="Academics">Academics</option>
+  <option value="Research">Research</option>
+</TextField>
+
 
         {/* Subcategory */}
         {task.category && (
@@ -260,31 +261,40 @@ export default function AddTask() {
           <option value="High">High</option>
         </TextField>
 
-        {/* Start Date */}
-        <TextField
-          name="startDate"
-          label="Start Date"
-          type="date"
-          value={task.startDate}
-          onChange={handleChange}
-          fullWidth
-          required
-          InputLabelProps={{ shrink: true }}
-          sx={{ marginBottom: 2 }}
-        />
+<TextField
+  name="startDate"
+  label="Start Date"
+  type="date"
+  value={task.startDate}
+  onChange={handleChange}
+  fullWidth
+  required
+  InputLabelProps={{ shrink: true }}
+  sx={{ marginBottom: 2 }}
+  InputProps={{
+    inputProps: {
+      min: new Date().toISOString().split('T')[0], // Sets the minimum date to today
+    }
+  }}
+/>
 
-        {/* End Date */}
-        <TextField
-          name="endDate"
-          label="End Date"
-          type="date"
-          value={task.endDate}
-          onChange={handleChange}
-          fullWidth
-          required
-          InputLabelProps={{ shrink: true }}
-          sx={{ marginBottom: 2 }}
-        />
+
+<TextField
+  name="endDate"
+  label="End Date"
+  type="date"
+  value={task.endDate}
+  onChange={handleChange}
+  fullWidth
+  required
+  InputLabelProps={{ shrink: true }}
+  sx={{ marginBottom: 2 }}
+  InputProps={{
+    inputProps: {
+      min: new Date().toISOString().split('T')[0], // Sets the minimum date to today
+    }
+  }}
+/>
 
         {/* Assign To */}
         <TextField

@@ -68,6 +68,9 @@ const AddSelfTask = () => {
     }
   };
 
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
   return (
     <Box
       sx={{
@@ -136,6 +139,7 @@ const AddSelfTask = () => {
           onChange={handleChange}
           InputLabelProps={{ shrink: true }}
           required
+          inputProps={{ min: today }} // Disable previous dates for startDate
         />
         <TextField
           label="End Date"
@@ -145,6 +149,7 @@ const AddSelfTask = () => {
           onChange={handleChange}
           InputLabelProps={{ shrink: true }}
           required
+          inputProps={{ min: today }} // Disable previous dates for endDate
         />
         <Button type="submit" variant="contained" color="primary" size="large">
           Add Task
