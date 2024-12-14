@@ -1,4 +1,6 @@
+// UserLogin Component (Updated)
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Config from '../Config';
@@ -32,7 +34,6 @@ export default function UserLogin({ onUserLogin }) {
         setError('');
       }
     } catch (error) {
-      // Display a generic error message for login failure
       if (error.response && error.response.status === 401) {
         setMessage('Login Failed');
       } else {
@@ -101,6 +102,11 @@ export default function UserLogin({ onUserLogin }) {
           Login
         </Button>
       </form>
+      <Box mt={2} textAlign="center">
+        <Link to="/forgotpassword" style={{ textDecoration: 'none', color: '#1976d2' }}>
+          Forgot Password?
+        </Link>
+      </Box>
     </Box>
   );
 }

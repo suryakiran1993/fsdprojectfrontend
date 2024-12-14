@@ -40,24 +40,38 @@ export default function AddTask() {
   }, []);
 
   useEffect(() => {
-    // Fetch the list of faculty from the API
     const fetchFacultyList = async () => {
       try {
         const response = await axios.get(`${Config.url}/getallusers`);
         if (response.data) {
-          setUsers(response.data); // Assuming the API returns an array of faculty objects
-          // Filter out the user who is adding the task
-          const filtered = response.data.filter((user) => user.id !== userData.id);
-          setFilteredUsers(filtered); // Set filtered users list excluding the current user
+          setUsers(response.data);
+  
+          // Role-based filtering
+          const filtered = response.data.filter((user) => {
+            // Exclude the current user's ID
+            if (user.id === userData.id) return false;
+  
+            // Role-based filtering
+            if (userData.role === 'PRINCIPAL') {
+              return user.role === 'HOD' || user.role === 'FACULTY';
+            } else if (userData.role === 'HOD') {
+              return user.role === 'FACULTY';
+            }
+  
+            return false;
+          });
+  
+          setFilteredUsers(filtered);
         }
       } catch (error) {
         console.error('Error fetching users:', error);
         alert('Failed to fetch users.');
       }
     };
-
+  
     fetchFacultyList();
-  }, [userData.id]); // Rerun the effect when userData.id changes
+  }, [userData]); // Rerun if userData changes
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -317,7 +331,7 @@ export default function AddTask() {
         >
           {filteredUsers.map((user) => (
             <MenuItem key={user.id} value={user.id}>
-              {`${user.id} - ${user.name}`}
+              {`${user.id} - ${user.name} [${user.role}]`}
             </MenuItem>
           ))}
         </TextField>

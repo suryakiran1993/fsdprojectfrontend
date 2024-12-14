@@ -10,6 +10,7 @@ import MyTaskProgressUpdates from './MyTaskProgressUpdates';
 import ViewTaskUpdates from './ViewTaskUpdates';
 import AddSelfTask from './AddSelfTask';
 import ViewSelfTasks from './ViewSelfTasks';
+import ForgotPassword from '../main/ForgotPassword';
 
 export default function UserNavBar() 
 {
@@ -67,6 +68,9 @@ export default function UserNavBar()
 
         <Route path="/addselftask" element={<AddSelfTask/>} exact/>
         <Route path="/viewselftasks" element={<ViewSelfTasks/>} exact/>
+
+       
+
       </Routes>
     </div>
   );

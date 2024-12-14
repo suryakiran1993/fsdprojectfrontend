@@ -64,7 +64,7 @@ export default function UserHome() {
           >
             <CardContent>
               <Typography variant="h4" gutterBottom>
-                Welcome, {userData.name}
+                Welcome, {userData.name} [{userData.role}]
               </Typography>
             </CardContent>
           </Card>

@@ -7,6 +7,8 @@ import UserLogin from '../user/UserLogin';
 import Contact from './Contact';
 import AdminLogin from '../admin/AdminLogin';
 import PageNotFound from './PageNotFound';
+import ForgotPassword from './ForgotPassword';
+import ResetPassword from './ResetPassword';
 
 export default function MainNavBar({ onAdminLogin, onUserLogin }) {
   return (
@@ -29,10 +31,22 @@ export default function MainNavBar({ onAdminLogin, onUserLogin }) {
       <div className="content">
         <Routes>
           <Route path="/" element={<Home />} exact />
+          
           <Route path="/about" element={<About />} exact />
           <Route path="/userlogin" element={<UserLogin onUserLogin={onUserLogin} />} exact />
           <Route path="/adminlogin" element={<AdminLogin onAdminLogin={onAdminLogin} />} exact />
           <Route path="/contact" element={<Contact />} exact />
+
+          {/* Forgot Password */}
+          <Route path="/forgotpassword" element={<ForgotPassword />} exact />
+
+          {/* Reset Password */}
+          <Route
+            path="/resetpassword"
+            element={<ResetPassword />}
+          />
+
+          {/* Page Not Found */}
           <Route path="*" element={<PageNotFound />} exact />
         </Routes>
       </div>
